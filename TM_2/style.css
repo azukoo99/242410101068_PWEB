@@ -107,7 +107,6 @@ nav ul li a {
     letter-spacing: .02em;
     border-bottom: 3px solid transparent;
 
-    /* transition: animasi perubahan style saat hover */
     transition: color .2s, border-color .2s, background .2s;
 }
 
@@ -120,13 +119,13 @@ nav ul li a:hover {
 /* Layout 2 kolom */
 main {
     display: grid;
-    grid-template-columns: 280px 1fr; /* kolom kiri tetap 280px */
+    grid-template-columns: 280px 1fr; 
     grid-template-rows: auto;
     gap: 28px;
     max-width: 1200px;
-    margin: 28px auto;          /* auto = posisi tengah halaman */
+    margin: 28px auto;         
     padding: 0 24px;
-    align-items: start;         /* elemen tidak meregang ke bawah */
+    align-items: start;         
 }
 
 /* sidebar */
@@ -138,7 +137,7 @@ aside {
     border: 1px solid var(--abu-border);
 
     position: sticky;
-    top: 90px; /* jarak dari atas saat sticky */
+    top: 90px;
 }
 
 aside h3 {
@@ -174,11 +173,9 @@ section {
     box-shadow: var(--bayangan-md);
     padding: 28px 32px;
     border: 1px solid var(--abu-border);
-    /* animasi muncul saat halaman dimuat */
     animation: fadeInUp .4s ease both;
 }
 
-/* animasi elemen muncul dari bawah ke atas */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -222,7 +219,7 @@ fieldset {
 }
 
 fieldset:focus-within {
-    /* :focus-within aktif saat ada elemen di dalam yang difokus */
+
     border-color: var(--biru-utama);
 }
 
@@ -255,7 +252,7 @@ input[type="email"] {
     font-size: .9rem;
     color: var(--hitam-teks);
     background: var(--putih);
-    outline: none; /* hilangkan outline bawaan browser */
+    outline: none;
 
     transition: border-color .2s, box-shadow .2s;
 }
@@ -264,10 +261,10 @@ input[type="email"] {
 input[type="text"]:focus,
 input[type="email"]:focus {
     border-color: var(--biru-utama);
-    box-shadow: 0 0 0 4px rgba(26,115,232,.15); /* ring focus */
+    box-shadow: 0 0 0 4px rgba(26,115,232,.15); 
 }
 
-/* Input readonly (tidak bisa diketik) */
+/* Input readonly */
 input[readonly] {
     background: var(--abu-terang);
     color: var(--abu-teks);
@@ -277,7 +274,7 @@ input[readonly] {
 /* Radio & Checkbox */
 input[type="radio"],
 input[type="checkbox"] {
-    accent-color: var(--biru-utama); /* warna tick/bullet */
+    accent-color: var(--biru-utama);
     width: 16px;
     height: 16px;
     cursor: pointer;
@@ -316,12 +313,12 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     background: var(--biru-gelap);
-    transform: translateY(-2px); /* efek naik sedikit */
+    transform: translateY(-2px); 
     box-shadow: var(--bayangan-md);
 }
 
 input[type="submit"]:active {
-    transform: translateY(0); /* kembali saat diklik */
+    transform: translateY(0); 
 }
 
 /* Tombol Reset */
@@ -346,11 +343,11 @@ input[type="reset"]:hover {
 
 table {
     width: 100%;
-    border-collapse: collapse; /* hilangkan jarak antar border */
+    border-collapse: collapse; 
     font-size: .875rem;
     margin-top: 12px;
     border-radius: var(--radius-md);
-    overflow: hidden; /* supaya border-radius pada tabel terlihat */
+    overflow: hidden;
 }
 
 thead {
@@ -375,10 +372,10 @@ tbody tr {
 tbody tr:last-child { border-bottom: none; }
 
 tbody tr:hover {
-    background: var(--biru-muda); /* baris berubah saat di-hover */
+    background: var(--biru-muda); 
 }
 
-/* nth-child: baris ganjil/genap warna bergantian (zebra striping) */
+/* nth-child: baris ganjil/genap warna bergantian*/
 tbody tr:nth-child(even) {
     background: var(--abu-terang);
 }
