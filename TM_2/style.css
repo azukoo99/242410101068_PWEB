@@ -1,0 +1,445 @@
+:root{
+    --biru-utama:   #1a73e8;
+    --biru-gelap:   #0d47a1;
+    --biru-muda:    #e8f0fe;
+    --biru-terang:  #4285f4;
+    --putih:        #ffffff;
+    --abu-terang:   #f8f9fa;
+    --abu-border:   #dadce0;
+    --abu-teks:     #5f6368;
+    --hitam-teks:   #202124;
+    --hijau:        #34a853;
+    --kuning:       #fbbc04;
+    --merah:        #ea4335;
+
+    --bayangan-sm:  0 1px 3px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.06);
+    --bayangan-md:  0 4px 12px rgba(0,0,0,.1);
+    --bayangan-lg:  0 8px 24px rgba(0,0,0,.12);
+
+    --radius-sm:    6px;
+    --radius-md:    12px;
+    --radius-lg:    16px;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--hitam-teks);
+    background-color: var(--abu-terang);
+}
+
+hr {
+    border: none;
+    margin: 10px;
+}
+
+/* HEADERR */
+header{
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    background-color: var(--putih);
+    border-bottom: 2px solid var(--biru-utama);
+    box-shadow: var(--bayangan-sm);
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 40px;
+}
+
+header img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;       
+    border: 2px solid var(--biru-utama);
+    object-fit: cover;
+    background: var(--biru-muda);
+    padding: 4px;
+}
+
+header h1 {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--biru-utama);
+    letter-spacing: -0.5px;
+}
+
+header p {
+    font-size: 14px;
+    color: var(--abu-teks);
+    margin-left: 1px;
+}
+
+
+
+/* NAVV */
+nav{
+    background-color: var(--biru-utama);
+    padding: 0 40px;
+}
+
+nav ul{
+    list-style: none;
+    display: flex;
+    gap: 4px;
+}
+
+nav ul li a {
+    display: block;
+    padding: 14px 20px;
+    color: rgba(255,255,255,.8);
+    text-decoration: none; 
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: .02em;
+    border-bottom: 3px solid transparent;
+
+    /* transition: animasi perubahan style saat hover */
+    transition: color .2s, border-color .2s, background .2s;
+}
+
+nav ul li a:hover {
+    color: var(--putih);
+    border-bottom-color: var(--putih);
+    background: rgba(255,255,255,.1);
+}
+
+/* Layout 2 kolom */
+main {
+    display: grid;
+    grid-template-columns: 280px 1fr; /* kolom kiri tetap 280px */
+    grid-template-rows: auto;
+    gap: 28px;
+    max-width: 1200px;
+    margin: 28px auto;          /* auto = posisi tengah halaman */
+    padding: 0 24px;
+    align-items: start;         /* elemen tidak meregang ke bawah */
+}
+
+/* sidebar */
+aside {
+    background: var(--putih);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--bayangan-md);
+    padding: 24px;
+    border: 1px solid var(--abu-border);
+
+    position: sticky;
+    top: 90px; /* jarak dari atas saat sticky */
+}
+
+aside h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--biru-utama);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--biru-muda);
+}
+
+aside p {
+    font-size: .875rem;
+    color: var(--abu-teks);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--abu-border);
+    line-height: 1.5;
+}
+
+aside p:last-child { border-bottom: none; }
+
+aside p strong {
+    display: block;
+    color: var(--hitam-teks);
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+/* section */
+section {
+    background: var(--putih);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--bayangan-md);
+    padding: 28px 32px;
+    border: 1px solid var(--abu-border);
+    /* animasi muncul saat halaman dimuat */
+    animation: fadeInUp .4s ease both;
+}
+
+/* animasi elemen muncul dari bawah ke atas */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Delay animasi*/
+section:nth-child(2) { animation-delay: .1s; }
+section:nth-child(3) { animation-delay: .2s; }
+section:nth-child(4) { animation-delay: .3s; }
+section:nth-child(5) { animation-delay: .4s; }
+
+section h2 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--hitam-teks);
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--biru-muda);
+}
+
+section > p {
+    color: var(--abu-teks);
+    margin-bottom: 20px;
+}
+
+
+
+/* style form */
+fieldset {
+    border: 2px solid var(--abu-border);
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    transition: border-color .2s;
+}
+
+fieldset:focus-within {
+    /* :focus-within aktif saat ada elemen di dalam yang difokus */
+    border-color: var(--biru-utama);
+}
+
+legend {
+    font-weight: 700;
+    font-size: .9rem;
+    color: var(--biru-utama);
+    background: var(--biru-muda);
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: .03em;
+}
+
+label {
+    font-size: .875rem;
+    font-weight: 600;
+    color: var(--hitam-teks);
+}
+
+/* Input teks, email */
+input[type="text"],
+input[type="email"] {
+    display: block;
+    width: 100%;
+    padding: 10px 14px;
+    margin-top: 6px;
+    border: 1.5px solid var(--abu-border);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: .9rem;
+    color: var(--hitam-teks);
+    background: var(--putih);
+    outline: none; /* hilangkan outline bawaan browser */
+
+    transition: border-color .2s, box-shadow .2s;
+}
+
+/* Efek saat input difokus */
+input[type="text"]:focus,
+input[type="email"]:focus {
+    border-color: var(--biru-utama);
+    box-shadow: 0 0 0 4px rgba(26,115,232,.15); /* ring focus */
+}
+
+/* Input readonly (tidak bisa diketik) */
+input[readonly] {
+    background: var(--abu-terang);
+    color: var(--abu-teks);
+    cursor: not-allowed;
+}
+
+/* Radio & Checkbox */
+input[type="radio"],
+input[type="checkbox"] {
+    accent-color: var(--biru-utama); /* warna tick/bullet */
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* Label untuk radio & checkbox */
+fieldset label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background .15s;
+}
+
+fieldset label:hover {
+    background: var(--biru-muda);
+}
+
+/* Tombol Submit */
+input[type="submit"] {
+    background: var(--biru-utama);
+    color: var(--putih);
+    border: none;
+    padding: 12px 28px;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: .95rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: var(--bayangan-sm);
+
+    transition: background .2s, transform .15s, box-shadow .2s;
+}
+
+input[type="submit"]:hover {
+    background: var(--biru-gelap);
+    transform: translateY(-2px); /* efek naik sedikit */
+    box-shadow: var(--bayangan-md);
+}
+
+input[type="submit"]:active {
+    transform: translateY(0); /* kembali saat diklik */
+}
+
+/* Tombol Reset */
+input[type="reset"] {
+    background: transparent;
+    color: var(--abu-teks);
+    border: 1.5px solid var(--abu-border);
+    padding: 12px 24px;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: all .2s;
+}
+
+input[type="reset"]:hover {
+    border-color: var(--merah);
+    color: var(--merah);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse; /* hilangkan jarak antar border */
+    font-size: .875rem;
+    margin-top: 12px;
+    border-radius: var(--radius-md);
+    overflow: hidden; /* supaya border-radius pada tabel terlihat */
+}
+
+thead {
+    background: var(--biru-utama);
+    color: var(--putih);
+}
+
+thead th {
+    padding: 13px 16px;
+    text-align: left;
+    font-weight: 700;
+    letter-spacing: .04em;
+    font-size: .82rem;
+    text-transform: uppercase;
+}
+
+tbody tr {
+    border-bottom: 1px solid var(--abu-border);
+    transition: background .15s;
+}
+
+tbody tr:last-child { border-bottom: none; }
+
+tbody tr:hover {
+    background: var(--biru-muda); /* baris berubah saat di-hover */
+}
+
+/* nth-child: baris ganjil/genap warna bergantian (zebra striping) */
+tbody tr:nth-child(even) {
+    background: var(--abu-terang);
+}
+
+tbody tr:nth-child(even):hover {
+    background: var(--biru-muda);
+}
+
+tbody td {
+    padding: 12px 16px;
+    color: var(--hitam-teks);
+}
+
+/* PROMO */
+article {
+    border: 1.5px solid var(--abu-border);
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    background: var(--abu-terang);
+
+    transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+
+article:last-child { margin-bottom: 0; }
+
+article:hover {
+    border-color: var(--biru-terang);
+    box-shadow: var(--bayangan-md);
+    transform: translateY(-2px);
+}
+
+article h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--biru-utama);
+    margin-bottom: 8px;
+}
+
+article p {
+    font-size: .875rem;
+    color: var(--abu-teks);
+    margin-bottom: 6px;
+}
+
+article p strong {
+    color: var(--hitam-teks);
+}
+
+/* FOoter */
+footer {
+    background: var(--biru-gelap);
+    color: rgba(255,255,255,.7);
+    text-align: center;
+    padding: 24px 40px;
+    font-size: .875rem;
+    margin-top: 20px;
+}
+
+footer p {
+    color: var(--putih);
+}
+
+/* responsive */
