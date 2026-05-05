@@ -1,0 +1,566 @@
+@extends('layouts.app')
+
+@section('content')
+<!-- NAVBAR -->
+<header class="navbar">
+    <div class="navbar-brand">
+        <img src="{{ asset('images/logo.png') }}" alt="DiamondStore Logo" class="navbar-logo">
+        <div class="navbar-title">
+            <span class="brand-name">DiamondStore</span>
+            <span class="brand-sub">Top Up Mobile Legends</span>
+        </div>
+    </div>
+
+    <!-- Tombol hamburger (3 garis) — hanya tampil di HP -->
+    <button class="hamburger" id="hamburger" aria-label="Buka menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Menu navigasi -->
+    <nav class="navbar-menu" id="navbar-menu">
+        <a href="#beranda" class="nav-link">🏠 Beranda</a>
+        <a href="#topup" class="nav-link">💎 Top Up</a>
+        <a href="#riwayat" class="nav-link">📋 Riwayat</a>
+        <a href="#promo" class="nav-link">🎁 Promo</a>
+        <a href="#inventaris" class="nav-link">💎 Kelola Stok</a>
+        <!-- Masuk hanya muncul di dalam menu HP -->
+        <a href="#" class="nav-link nav-masuk-mobile">Masuk</a>
+    </nav>
+
+    <!-- Tombol Masuk — hanya tampil di desktop -->
+    <div class="navbar-action">
+        <a href="#" class="btn-login">Masuk</a>
+    </div>
+</header>
+
+<div class="navbar-spacer"></div>
+
+<!-- HERO -->
+<section id="beranda" class="hero">
+    <div class="hero-overlay">
+
+        <div class="hero-content">
+            <p class="hero-badge">⚡ Proses Instan &bull; Terpercaya</p>
+            <h1 class="hero-title">
+                Top Up Diamond<br><span>Mobile Legends</span>
+            </h1>
+            <p class="hero-desc">
+                Platform top up diamond tercepat dan termurah. Tersedia 24/7 dengan lebih dari 125.000 pengguna aktif.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#topup" class="btn-primary">💎 Top Up Sekarang</a>
+                <a href="#promo" class="btn-outline">🎁 Lihat Promo</a>
+            </div>
+        </div>
+
+        {{-- DATA --}}
+        @php
+        $stats = [
+            ['judul' => 'Pengguna', 'nilai' => '125K+'],
+            ['judul' => 'Sukses Rate', 'nilai' => '99.8%'],
+            ['judul' => 'Rata-rata Proses', 'nilai' => '45 Dtk'],
+            ['judul' => 'Layanan', 'nilai' => '24/7'],
+        ];
+        @endphp
+
+        {{-- HERO STATS --}}
+        <div class="hero-stats">
+            @forelse($stats as $stat)
+                <x-stat-card
+                    :judul="$stat['judul']"
+                    :nilai="$stat['nilai']"
+                />
+            @empty
+                <p>Tidak ada data</p>
+            @endforelse
+        </div>
+
+    </div>
+</section>
+
+<!-- LAYOUT WRAPPER -->
+<div class="layout-wrapper">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-card">
+            <h3 class="sidebar-title">🔍 Filter Paket</h3>
+
+            <div class="filter-group">
+                <h4 class="filter-label">Rentang Harga</h4>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="harga" value="murah" checked>
+                    <span class="checkbox-custom"></span>
+                    Di bawah Rp 50.000
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="harga" value="menengah" checked>
+                    <span class="checkbox-custom"></span>
+                    Rp 50.000 &ndash; Rp 150.000
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="harga" value="mahal">
+                    <span class="checkbox-custom"></span>
+                    Di atas Rp 150.000
+                </label>
+            </div>
+
+            <div class="filter-group">
+                <h4 class="filter-label">Metode Pembayaran</h4>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="bayar" value="ewallet" checked>
+                    <span class="checkbox-custom"></span>
+                    E-Wallet (DANA, GoPay, OVO)
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="bayar" value="transfer" checked>
+                    <span class="checkbox-custom"></span>
+                    Transfer Bank
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="bayar" value="minimarket">
+                    <span class="checkbox-custom"></span>
+                    Minimarket
+                </label>
+            </div>
+
+            <div class="sidebar-stats">
+                <h4 class="filter-label">📊 Statistik Hari Ini</h4>
+                <p class="stat-row"><span>Transaksi</span><strong>3.217</strong></p>
+                <p class="stat-row"><span>Diamond Terjual</span><strong>524K</strong></p>
+                <p class="stat-row"><span>Pengguna Online</span><strong>1.482</strong></p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- KONTEN UTAMA -->
+    <main class="main-content">
+
+        <!-- FORM TOP UP -->
+        <section id="topup" class="section-block">
+            <h2 class="section-title">🛒 Form Top Up</h2>
+            <p class="section-desc">Isi data akun kamu, pilih paket, lalu bayar.</p>
+
+            <div class="form-cari">
+                <h4 class="form-cari-title">🔍 Cek Akun Mobile Legends</h4>
+                <div class="cari-wrapper">
+                    <input type="text" class="input-cari" placeholder="Masukkan User ID...">
+                    <input type="text" class="input-zone" placeholder="Zone ID">
+                    <button class="btn-cari">Cek Akun</button>
+                </div>
+                <p class="cari-hint">💡 User ID ada di profil Mobile Legends kamu</p>
+            </div>
+
+            <form action="" method="post" class="form-topup">
+
+                <fieldset class="form-fieldset">
+                    <legend>Data Akun</legend>
+                    <div class="form-group">
+                        <label for="user-id">User ID <span class="required">*</span></label>
+                        <input type="text" id="user-id" name="user_id" placeholder="123456789" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="zone-id">Zone ID <span class="required">*</span></label>
+                        <input type="text" id="zone-id" name="zone_id" placeholder="1234" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nama">Nama Akun</label>
+                        <input type="text" id="nama" name="nama" placeholder="Otomatis terisi" readonly>
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-fieldset">
+                    <legend>Pilih Paket Diamond</legend>
+                    <div class="paket-grid">
+
+                        <label class="paket-card">
+                            <input type="radio" name="paket" value="11" class="paket-radio">
+                            <div class="paket-icon">💎</div>
+                            <h3 class="paket-jumlah">11 Diamond</h3>
+                            <p class="paket-keterangan">Paket Pemula</p>
+                            <p class="paket-harga">Rp 3.000</p>
+                        </label>
+
+                        <label class="paket-card">
+                            <input type="radio" name="paket" value="86" class="paket-radio">
+                            <div class="paket-icon">💎</div>
+                            <h3 class="paket-jumlah">86 Diamond</h3>
+                            <p class="paket-keterangan">Paket Standar</p>
+                            <p class="paket-harga">Rp 20.000</p>
+                        </label>
+
+                        <label class="paket-card paket-populer">
+                            <input type="radio" name="paket" value="172" class="paket-radio">
+                            <span class="badge-populer">⭐ Terlaris</span>
+                            <div class="paket-icon">💎</div>
+                            <h3 class="paket-jumlah">172 Diamond</h3>
+                            <p class="paket-keterangan">Paket Populer</p>
+                            <p class="paket-harga">Rp 40.000</p>
+                        </label>
+
+                        <label class="paket-card">
+                            <input type="radio" name="paket" value="257" class="paket-radio">
+                            <div class="paket-icon">💎</div>
+                            <h3 class="paket-jumlah">257 Diamond</h3>
+                            <p class="paket-keterangan">Paket Hemat</p>
+                            <p class="paket-harga">Rp 60.000</p>
+                        </label>
+
+                        <label class="paket-card">
+                            <input type="radio" name="paket" value="514" class="paket-radio">
+                            <div class="paket-icon">💎</div>
+                            <h3 class="paket-jumlah">514 Diamond</h3>
+                            <p class="paket-keterangan">Paket Pro</p>
+                            <p class="paket-harga">Rp 115.000</p>
+                        </label>
+
+                        <label class="paket-card">
+                            <input type="radio" name="paket" value="706" class="paket-radio">
+                            <div class="paket-icon">💎</div>
+                            <h3 class="paket-jumlah">706 Diamond</h3>
+                            <p class="paket-keterangan">Paket Expert</p>
+                            <p class="paket-harga">Rp 150.000</p>
+                        </label>
+
+                        <label class="paket-card">
+                            <input type="radio" name="paket" value="1069" class="paket-radio">
+                            <div class="paket-icon">💎</div>
+                            <h3 class="paket-jumlah">1.069 Diamond</h3>
+                            <p class="paket-keterangan">Paket Master</p>
+                            <p class="paket-harga">Rp 225.000</p>
+                        </label>
+
+                        <label class="paket-card paket-sultan">
+                            <input type="radio" name="paket" value="1412" class="paket-radio">
+                            <span class="badge-populer">👑 Sultan</span>
+                            <div class="paket-icon">💎</div>
+                            <h3 class="paket-jumlah">1.412 Diamond</h3>
+                            <p class="paket-keterangan">Paket Sultan</p>
+                            <p class="paket-harga">Rp 300.000</p>
+                        </label>
+
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-fieldset">
+                    <legend>Metode Pembayaran</legend>
+                    <div class="radio-group">
+                        <label class="radio-item"><input type="radio" name="pembayaran" value="dana"> DANA</label>
+                        <label class="radio-item"><input type="radio" name="pembayaran" value="gopay"> GoPay</label>
+                        <label class="radio-item"><input type="radio" name="pembayaran" value="ovo"> OVO</label>
+                        <label class="radio-item"><input type="radio" name="pembayaran" value="bca"> Transfer
+                            BCA</label>
+                        <label class="radio-item"><input type="radio" name="pembayaran" value="bri"> Transfer
+                            BRI</label>
+                        <label class="radio-item"><input type="radio" name="pembayaran" value="indomaret">
+                            Indomaret/Alfamart</label>
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-fieldset">
+                    <legend>Konfirmasi</legend>
+                    <div class="form-group">
+                        <label for="email">Email Notifikasi</label>
+                        <input type="email" id="email" name="email" placeholder="contoh@gmail.com">
+                    </div>
+                    <label class="checkbox-item checkbox-syarat">
+                        <input type="checkbox" name="setuju" required>
+                        <span class="checkbox-custom"></span>
+                        Saya menyetujui syarat &amp; ketentuan yang berlaku
+                    </label>
+                    <div class="form-actions">
+                        <input type="submit" value="💎 Bayar Sekarang">
+                        <input type="reset" value="🔄 Reset">
+                    </div>
+                </fieldset>
+
+            </form>
+        </section>
+
+        <!-- TABEL RIWAYAT -->
+        <section id="riwayat" class="section-block">
+            <h2 class="section-title">📋 Riwayat Transaksi</h2>
+            <p class="section-desc">Daftar 5 transaksi terakhir di akun kamu.</p>
+            <div class="tabel-wrapper">
+                <table class="tabel-riwayat">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Tanggal</th>
+                            <th>User ID</th>
+                            <th>Paket</th>
+                            <th>Nominal</th>
+                            <th>Bayar</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>09/03/2026</td>
+                            <td>123456789</td>
+                            <td>514 💎 Pro</td>
+                            <td>Rp 115.000</td>
+                            <td>GoPay</td>
+                            <td><span class="badge-status status-sukses">✅ Selesai</span></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>08/03/2026</td>
+                            <td>987654321</td>
+                            <td>1.412 💎 Sultan</td>
+                            <td>Rp 300.000</td>
+                            <td>BCA</td>
+                            <td><span class="badge-status status-pending">⏳ Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>07/03/2026</td>
+                            <td>112233445</td>
+                            <td>86 💎 Standar</td>
+                            <td>Rp 20.000</td>
+                            <td>DANA</td>
+                            <td><span class="badge-status status-gagal">❌ Gagal</span></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>06/03/2026</td>
+                            <td>556677889</td>
+                            <td>172 💎 Populer</td>
+                            <td>Rp 40.000</td>
+                            <td>OVO</td>
+                            <td><span class="badge-status status-sukses">✅ Selesai</span></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>05/03/2026</td>
+                            <td>998877665</td>
+                            <td>257 💎 Hemat</td>
+                            <td>Rp 60.000</td>
+                            <td>Indomaret</td>
+                            <td><span class="badge-status status-sukses">✅ Selesai</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- PROMO -->
+        <section id="promo" class="section-block">
+            <h2 class="section-title">🎁 Promo Special</h2>
+            <p class="section-desc">Manfaatkan promo berikut untuk hemat lebih banyak!</p>
+            <div class="promo-grid">
+                <article class="promo-card">
+                    <div class="promo-ikon">💥</div>
+                    <h3>Double Diamond Weekend</h3>
+                    <p>Bonus 10% diamond setiap Sabtu &amp; Minggu untuk paket di atas 86 diamond.</p>
+                    <p class="promo-exp">⏰ Hingga: <strong>31 Maret 2026</strong></p>
+                </article>
+                <article class="promo-card">
+                    <div class="promo-ikon">🎯</div>
+                    <h3>Cashback GoPay 15%</h3>
+                    <p>Bayar pakai GoPay, cashback 15% maks. Rp 20.000 per transaksi.</p>
+                    <p class="promo-exp">⏰ Hingga: <strong>15 Maret 2026</strong></p>
+                </article>
+                <article class="promo-card">
+                    <div class="promo-ikon">👑</div>
+                    <h3>Bonus Sultan</h3>
+                    <p>Beli 1.412 diamond, gratis 1 bulan Weekly Diamond Pass senilai Rp 15.000.</p>
+                    <p class="promo-exp">⏰ Hingga: <strong>20 Maret 2026</strong></p>
+                </article>
+            </div>
+        </section>
+
+        <!-- ======================== KELOLA STOK DIAMOND ======================== -->
+        <section id="inventaris" class="section-block">
+            <h2 class="section-title">💎 Kelola Stok Diamond</h2>
+            <p class="section-desc">Tambah, edit, hapus, cari, dan filter stok paket diamond.</p>
+
+            <!-- STATISTIK INVENTARIS -->
+            <div class="inv-stats-grid">
+                <div class="inv-stat-card">
+                    <div class="inv-stat-icon">📊</div>
+                    <div class="inv-stat-info">
+                        <span class="inv-stat-value" id="stat-total-item">0</span>
+                        <span class="inv-stat-label">Total Paket</span>
+                    </div>
+                </div>
+                <div class="inv-stat-card">
+                    <div class="inv-stat-icon">💰</div>
+                    <div class="inv-stat-info">
+                        <span class="inv-stat-value" id="stat-nilai-inventaris">Rp 0</span>
+                        <span class="inv-stat-label">Total Nilai Stok</span>
+                    </div>
+                </div>
+                <div class="inv-stat-card">
+                    <div class="inv-stat-icon">⚠️</div>
+                    <div class="inv-stat-info">
+                        <span class="inv-stat-value" id="stat-stok-menipis">0</span>
+                        <span class="inv-stat-label">Stok Menipis (&lt;5)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PENCARIAN & FILTER -->
+            <div class="inv-controls">
+                <div class="inv-search-box">
+                    <span class="inv-search-icon">🔍</span>
+                    <input type="text" id="inv-input-cari" class="inv-search-input" placeholder="Cari nama / kode paket..." autocomplete="off">
+                </div>
+                <select id="inv-filter-kategori" class="inv-filter-select">
+                    <option value="">Semua Kategori</option>
+                    <option value="Diamond">Diamond</option>
+                    <option value="Weekly Pass">Weekly Pass</option>
+                    <option value="Starlight">Starlight</option>
+                    <option value="Twilight Pass">Twilight Pass</option>
+                    <option value="Bundle">Bundle</option>
+                    <option value="Lainnya">Lainnya</option>
+                </select>
+            </div>
+
+            <!-- FORM TAMBAH / EDIT BARANG -->
+            <div class="inv-form-wrapper">
+                <h3 class="inv-form-title" id="inv-form-title">➕ Tambah Paket Diamond</h3>
+                <form id="inv-form-barang" novalidate>
+                    <div class="inv-form-grid">
+                        <div class="inv-form-group">
+                            <label for="inv-kode">Kode Paket <span class="required">*</span></label>
+                            <input type="text" id="inv-kode" placeholder="Contoh: DM-086" autocomplete="off">
+                            <span class="inv-error" id="inv-err-kode"></span>
+                        </div>
+                        <div class="inv-form-group">
+                            <label for="inv-nama">Nama Paket <span class="required">*</span></label>
+                            <input type="text" id="inv-nama" placeholder="Contoh: 86 Diamond" autocomplete="off">
+                            <span class="inv-error" id="inv-err-nama"></span>
+                        </div>
+                        <div class="inv-form-group">
+                            <label for="inv-kategori">Kategori <span class="required">*</span></label>
+                            <select id="inv-kategori">
+                                <option value="">— Pilih Kategori —</option>
+                                <option value="Diamond">Diamond</option>
+                                <option value="Weekly Pass">Weekly Pass</option>
+                                <option value="Starlight">Starlight</option>
+                                <option value="Twilight Pass">Twilight Pass</option>
+                                <option value="Bundle">Bundle</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                            <span class="inv-error" id="inv-err-kategori"></span>
+                        </div>
+                        <div class="inv-form-group">
+                            <label for="inv-stok">Stok <span class="required">*</span></label>
+                            <input type="number" id="inv-stok" placeholder="0" min="0">
+                            <span class="inv-error" id="inv-err-stok"></span>
+                        </div>
+                        <div class="inv-form-group">
+                            <label for="inv-harga">Harga (Rp) <span class="required">*</span></label>
+                            <input type="number" id="inv-harga" placeholder="0" min="0">
+                            <span class="inv-error" id="inv-err-harga"></span>
+                        </div>
+                        <div class="inv-form-group">
+                            <label for="inv-tanggal">Tanggal Masuk <span class="required">*</span></label>
+                            <input type="date" id="inv-tanggal">
+                            <span class="inv-error" id="inv-err-tanggal"></span>
+                        </div>
+                    </div>
+                    <div class="inv-form-actions">
+                        <button type="submit" class="inv-btn inv-btn-simpan" id="inv-btn-submit">💾 Simpan</button>
+                        <button type="button" class="inv-btn inv-btn-batal" id="inv-btn-batal" style="display:none;">✖ Batal</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- TABEL DAFTAR BARANG -->
+            <div class="inv-tabel-wrapper">
+                <table class="inv-tabel" id="inv-tabel">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Kode</th>
+                            <th>Nama Paket</th>
+                            <th>Kategori</th>
+                            <th>Stok</th>
+                            <th>Harga</th>
+                            <th>Tgl Masuk</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inv-tbody">
+                        <!-- Rendered by JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- EMPTY STATE -->
+            <div class="inv-empty" id="inv-empty">
+                <div class="inv-empty-icon">💎</div>
+                <h3>Belum Ada Paket Diamond</h3>
+                <p>Tambahkan paket diamond pertama melalui form di atas.</p>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-grid">
+        <div class="footer-col">
+            <div class="footer-brand">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="footer-logo">
+                <span class="footer-brand-name">DiamondStore</span>
+            </div>
+            <p class="footer-desc">Platform top up Mobile Legends terpercaya sejak 2023. Proses cepat, harga
+                terjangkau, layanan 24/7.</p>
+            <div class="footer-sosmed">
+                <a href="#" class="sosmed-link">📘 Facebook</a>
+                <a href="#" class="sosmed-link">📸 Instagram</a>
+                <a href="#" class="sosmed-link">🐦 Twitter</a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4 class="footer-heading">Tautan Cepat</h4>
+            <ul class="footer-links">
+                <li><a href="#beranda">🏠 Beranda</a></li>
+                <li><a href="#topup">💎 Top Up</a></li>
+                <li><a href="#riwayat">📋 Riwayat</a></li>
+                <li><a href="#promo">🎁 Promo</a></li>
+                <li><a href="#inventaris">💎 Kelola Stok</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4 class="footer-heading">Hubungi Kami</h4>
+            <address class="footer-kontak">
+                <p>📍 Jl. Gamer No. 88, Jakarta Selatan</p>
+                <p>📧 <a href="mailto:support@diamondstore.id">support@diamondstore.id</a></p>
+                <p>📱 <a href="tel:+6281234567890">+62 812-3456-7890</a></p>
+                <p>🕐 Layanan: 08.00 &ndash; 22.00 WIB</p>
+            </address>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 DiamondStore. Semua hak dilindungi. Bukan afiliasi resmi Moonton.</p>
+    </div>
+</footer>
+
+<!-- DIALOG KONFIRMASI HAPUS INVENTARIS -->
+<div class="inv-dialog-overlay" id="inv-dialog-overlay">
+    <div class="inv-dialog-box">
+        <div class="inv-dialog-icon">🗑️</div>
+        <h3>Hapus Barang?</h3>
+        <p id="inv-dialog-msg">Apakah kamu yakin ingin menghapus barang ini?</p>
+        <div class="inv-dialog-actions">
+            <button class="inv-btn inv-btn-hapus-konfirmasi" id="inv-btn-konfirmasi-hapus">Ya, Hapus</button>
+            <button class="inv-btn inv-btn-batal" id="inv-btn-batal-hapus">Batal</button>
+        </div>
+    </div>
+</div>
+
+@push('scripts')
+<script>
+    console.log("Dashboard loaded");
+</script>
+@endpush
+@endsection
