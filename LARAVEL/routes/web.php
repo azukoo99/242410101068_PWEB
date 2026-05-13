@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -11,5 +12,4 @@ Route::get('/dashboard', function () {
     return redirect('/')->with('success', 'Top up berhasil!');
 });
 
-Route::view('/tentang', 'tentang');
-Route::view('/kontak', 'kontak');
+Route::resource('products', ProductController::class);

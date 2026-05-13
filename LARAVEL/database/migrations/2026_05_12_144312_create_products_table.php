@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mata_kuliahs', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
+            $table->string('nama_paket');
+            $table->integer('jumlah_diamond');
+            $table->integer('harga');
+            $table->string('foto')->nullable();
+            $table->enum('status', ['tersedia', 'habis'])->default('tersedia');
             $table->timestamps();
         });
     }
@@ -23,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mata_kuliahs');
+        Schema::dropIfExists('products');
     }
 };

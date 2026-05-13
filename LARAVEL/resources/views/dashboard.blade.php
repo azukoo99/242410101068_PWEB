@@ -1,42 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<!-- NAVBAR -->
-<header class="navbar">
-    <div class="navbar-brand">
-        <img src="{{ asset('images/logo.png') }}" alt="DiamondStore Logo" class="navbar-logo">
-        <div class="navbar-title">
-            <span class="brand-name">DiamondStore</span>
-            <span class="brand-sub">Top Up Mobile Legends</span>
-        </div>
-    </div>
-
-    <!-- Tombol hamburger (3 garis) — hanya tampil di HP -->
-    <button class="hamburger" id="hamburger" aria-label="Buka menu">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-
-    <!-- Menu navigasi -->
-    <nav class="navbar-menu" id="navbar-menu">
-        <a href="#beranda" class="nav-link">🏠 Beranda</a>
-        <a href="#topup" class="nav-link">💎 Top Up</a>
-        <a href="#riwayat" class="nav-link">📋 Riwayat</a>
-        <a href="#promo" class="nav-link">🎁 Promo</a>
-        <a href="#inventaris" class="nav-link">💎 Kelola Stok</a>
-        <!-- Masuk hanya muncul di dalam menu HP -->
-        <a href="#" class="nav-link nav-masuk-mobile">Masuk</a>
-    </nav>
-
-    <!-- Tombol Masuk — hanya tampil di desktop -->
-    <div class="navbar-action">
-        <a href="#" class="btn-login">Masuk</a>
-    </div>
-</header>
-
-<div class="navbar-spacer"></div>
-
 <!-- HERO -->
 <section id="beranda" class="hero">
     <div class="hero-overlay">
@@ -374,132 +338,6 @@
             </div>
         </section>
 
-        <!-- ======================== KELOLA STOK DIAMOND ======================== -->
-        <section id="inventaris" class="section-block">
-            <h2 class="section-title">💎 Kelola Stok Diamond</h2>
-            <p class="section-desc">Tambah, edit, hapus, cari, dan filter stok paket diamond.</p>
-
-            <!-- STATISTIK INVENTARIS -->
-            <div class="inv-stats-grid">
-                <div class="inv-stat-card">
-                    <div class="inv-stat-icon">📊</div>
-                    <div class="inv-stat-info">
-                        <span class="inv-stat-value" id="stat-total-item">0</span>
-                        <span class="inv-stat-label">Total Paket</span>
-                    </div>
-                </div>
-                <div class="inv-stat-card">
-                    <div class="inv-stat-icon">💰</div>
-                    <div class="inv-stat-info">
-                        <span class="inv-stat-value" id="stat-nilai-inventaris">Rp 0</span>
-                        <span class="inv-stat-label">Total Nilai Stok</span>
-                    </div>
-                </div>
-                <div class="inv-stat-card">
-                    <div class="inv-stat-icon">⚠️</div>
-                    <div class="inv-stat-info">
-                        <span class="inv-stat-value" id="stat-stok-menipis">0</span>
-                        <span class="inv-stat-label">Stok Menipis (&lt;5)</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PENCARIAN & FILTER -->
-            <div class="inv-controls">
-                <div class="inv-search-box">
-                    <span class="inv-search-icon">🔍</span>
-                    <input type="text" id="inv-input-cari" class="inv-search-input" placeholder="Cari nama / kode paket..." autocomplete="off">
-                </div>
-                <select id="inv-filter-kategori" class="inv-filter-select">
-                    <option value="">Semua Kategori</option>
-                    <option value="Diamond">Diamond</option>
-                    <option value="Weekly Pass">Weekly Pass</option>
-                    <option value="Starlight">Starlight</option>
-                    <option value="Twilight Pass">Twilight Pass</option>
-                    <option value="Bundle">Bundle</option>
-                    <option value="Lainnya">Lainnya</option>
-                </select>
-            </div>
-
-            <!-- FORM TAMBAH / EDIT BARANG -->
-            <div class="inv-form-wrapper">
-                <h3 class="inv-form-title" id="inv-form-title">➕ Tambah Paket Diamond</h3>
-                <form id="inv-form-barang" novalidate>
-                    <div class="inv-form-grid">
-                        <div class="inv-form-group">
-                            <label for="inv-kode">Kode Paket <span class="required">*</span></label>
-                            <input type="text" id="inv-kode" placeholder="Contoh: DM-086" autocomplete="off">
-                            <span class="inv-error" id="inv-err-kode"></span>
-                        </div>
-                        <div class="inv-form-group">
-                            <label for="inv-nama">Nama Paket <span class="required">*</span></label>
-                            <input type="text" id="inv-nama" placeholder="Contoh: 86 Diamond" autocomplete="off">
-                            <span class="inv-error" id="inv-err-nama"></span>
-                        </div>
-                        <div class="inv-form-group">
-                            <label for="inv-kategori">Kategori <span class="required">*</span></label>
-                            <select id="inv-kategori">
-                                <option value="">— Pilih Kategori —</option>
-                                <option value="Diamond">Diamond</option>
-                                <option value="Weekly Pass">Weekly Pass</option>
-                                <option value="Starlight">Starlight</option>
-                                <option value="Twilight Pass">Twilight Pass</option>
-                                <option value="Bundle">Bundle</option>
-                                <option value="Lainnya">Lainnya</option>
-                            </select>
-                            <span class="inv-error" id="inv-err-kategori"></span>
-                        </div>
-                        <div class="inv-form-group">
-                            <label for="inv-stok">Stok <span class="required">*</span></label>
-                            <input type="number" id="inv-stok" placeholder="0" min="0">
-                            <span class="inv-error" id="inv-err-stok"></span>
-                        </div>
-                        <div class="inv-form-group">
-                            <label for="inv-harga">Harga (Rp) <span class="required">*</span></label>
-                            <input type="number" id="inv-harga" placeholder="0" min="0">
-                            <span class="inv-error" id="inv-err-harga"></span>
-                        </div>
-                        <div class="inv-form-group">
-                            <label for="inv-tanggal">Tanggal Masuk <span class="required">*</span></label>
-                            <input type="date" id="inv-tanggal">
-                            <span class="inv-error" id="inv-err-tanggal"></span>
-                        </div>
-                    </div>
-                    <div class="inv-form-actions">
-                        <button type="submit" class="inv-btn inv-btn-simpan" id="inv-btn-submit">💾 Simpan</button>
-                        <button type="button" class="inv-btn inv-btn-batal" id="inv-btn-batal" style="display:none;">✖ Batal</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- TABEL DAFTAR BARANG -->
-            <div class="inv-tabel-wrapper">
-                <table class="inv-tabel" id="inv-tabel">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Kode</th>
-                            <th>Nama Paket</th>
-                            <th>Kategori</th>
-                            <th>Stok</th>
-                            <th>Harga</th>
-                            <th>Tgl Masuk</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="inv-tbody">
-                        <!-- Rendered by JS -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- EMPTY STATE -->
-            <div class="inv-empty" id="inv-empty">
-                <div class="inv-empty-icon">💎</div>
-                <h3>Belum Ada Paket Diamond</h3>
-                <p>Tambahkan paket diamond pertama melalui form di atas.</p>
-            </div>
-        </section>
 
     </main>
 </div>
@@ -527,7 +365,7 @@
                 <li><a href="#topup">💎 Top Up</a></li>
                 <li><a href="#riwayat">📋 Riwayat</a></li>
                 <li><a href="#promo">🎁 Promo</a></li>
-                <li><a href="#inventaris">💎 Kelola Stok</a></li>
+
             </ul>
         </div>
         <div class="footer-col">
@@ -545,18 +383,6 @@
     </div>
 </footer>
 
-<!-- DIALOG KONFIRMASI HAPUS INVENTARIS -->
-<div class="inv-dialog-overlay" id="inv-dialog-overlay">
-    <div class="inv-dialog-box">
-        <div class="inv-dialog-icon">🗑️</div>
-        <h3>Hapus Barang?</h3>
-        <p id="inv-dialog-msg">Apakah kamu yakin ingin menghapus barang ini?</p>
-        <div class="inv-dialog-actions">
-            <button class="inv-btn inv-btn-hapus-konfirmasi" id="inv-btn-konfirmasi-hapus">Ya, Hapus</button>
-            <button class="inv-btn inv-btn-batal" id="inv-btn-batal-hapus">Batal</button>
-        </div>
-    </div>
-</div>
 
 @push('scripts')
 <script>
