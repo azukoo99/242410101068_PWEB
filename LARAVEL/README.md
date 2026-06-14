@@ -1,58 +1,180 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 💎 DiamondStore - Web-Based Mobile Legends Top-Up Portal
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A premium, automated web application built using **Laravel 11**, **Tailwind CSS**, **MySQL**, and **APIGames API** integration. This portal allows players to purchase Mobile Legends: Bang Bang (MLBB) diamonds with instant account verification, and provides administrators with a sleak dashboard for product stock control and transaction log monitoring.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Fitur Utama (Core Features)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 👤 Portal Pelanggan (Customer Features)
+- **🔍 Cek Akun Mobile Legends (Fetch API)**: Verifikasi asinkronus untuk mendeteksi *nickname* game berdasarkan User ID & Zone ID sebelum checkout untuk menghindari salah kirim.
+- **💎 Formulir Top-Up Dinamis**: Pilihan paket diamond dibaca secara *real-time* dari database dengan validasi stok otomatis (pembelian diblokir jika stok habis).
+- **💳 Beragam Metode Pembayaran**: Mendukung simulasi pembayaran populer seperti DANA, GoPay, OVO, Transfer BCA/BRI, dan ritel (Indomaret/Alfamart).
+- **📋 Riwayat Pesanan**: Tabel riwayat transaksi lengkap dengan detail status, tanggal, metode bayar, dan total harga.
+- **🧾 Struk Digital (Invoice Detail)**: Struk belanja berdesain premium dengan kode pesanan terstruktur (**`#PS-0000xx`**).
+- **🌓 Mode Gelap/Terang (Dark/Light Mode)**: Peralihan tema menggunakan cookies (`color-theme`) tanpa kedipan layar (*flicker*) saat halaman dimuat ulang.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 📊 Dashboard Admin (Admin Features)
+- **📈 Statistik Ringkasan Harian**: Kartu grafik yang menghitung Pesanan Hari Ini, Pendapatan Hari Ini (Rp), dan Total Diamond Terjual Hari Ini.
+- **📦 Kelola Stok Produk (CRUD)**: Menambah, mengubah detail, dan menghapus paket produk diamond lewat popup modal interaktif.
+- **⚡ Live Search Stok**: Pencarian instan produk berdasarkan nama paket atau ID produk di sisi frontend.
+- **📜 Log Pesanan Pelanggan**: Tabel komprehensif seluruh transaksi pelanggan dengan sistem paginasi (*pagination*) dan akses cepat ke detail invoice masing-masing.
+- **🔒 Proteksi Keamanan**: Pembatasan akses ke menu `/admin/*` menggunakan Middleware khusus role `admin`.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🛠️ Teknologi yang Digunakan (Tech Stack)
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Backend**: PHP 8.2+, Laravel 13.
+- **Frontend**: Tailwind CSS, Alpine.js, Vanilla JS.
+- **Database**: MySQL.
+- **Asset Bundler**: Vite.
+- **Penyedia API**: APIGames REST API
+- **Hosting / Deploy**: Railway.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+---
 
-## Agentic Development
+## 📊 Entity Relationship Diagram (ERD)
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+Berikut adalah struktur hubungan antar tabel database di proyek ini:
 
-```bash
-composer require laravel/boost --dev
+```mermaid
+erDiagram
+    users ||--o{ pesanans : "memiliki"
+    users ||--o{ sessions : "melacak"
 
-php artisan boost:install
+    users {
+        int id PK
+        string name
+        string email "Unique"
+        string password
+        string role
+        string remember_token
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    pesanans {
+        int id PK
+        int user_id FK
+        string game_user_id
+        string zone_id
+        string paket
+        int harga
+        string pembayaran
+        string status
+        string email
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    products {
+        int id PK
+        string nama_paket
+        int harga
+        int stok
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    sessions {
+        string id PK
+        int user_id FK
+        string ip_address
+        text user_agent
+        longtext payload
+        int last_activity
+    }
+
+    password_reset_tokens {
+        string email PK
+        string token
+        timestamp created_at
+    }
+
+    cache {
+        string key PK
+        text value
+        int expiration
+    }
+
+    jobs {
+        bigint id PK
+        string queue
+        longtext payload
+        tinyint attempts
+        int reserved_at
+        int available_at
+        int created_at
+    }
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+## 💻 Cara Instalasi & Menjalankan Proyek (Setup Guide)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 1. Prasyarat (Prerequisites)
+Pastikan komputer Anda sudah terpasang:
+- PHP >= 8.2
+- Composer
+- Node.js & NPM
+- MySQL Database
 
-## Code of Conduct
+### 2. Kloning Repositori
+```bash
+git clone https://github.com/username/repository-name.git
+cd repository-name/LARAVEL
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 3. Instal Dependensi
+```bash
+composer install
+npm install
+```
 
-## Security Vulnerabilities
+### 4. Konfigurasi Environment File
+Salin file `.env.example` menjadi `.env`:
+```bash
+cp .env.example .env
+```
+Buka file `.env` dan konfigurasikan koneksi database MySQL Anda:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nama_database_anda
+DB_USERNAME=username_database_anda
+DB_PASSWORD=password_database_anda
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 5. Generate Application Key
+```bash
+php artisan key:generate
+```
 
-## License
+### 6. Jalankan Migrasi & Seeder Database
+Buat semua tabel database dan isi data produk bawaan dengan perintah:
+```bash
+php artisan migrate:fresh --seed
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 7. Jalankan Server Pengembangan
+Buka dua terminal terpisah dan jalankan perintah ini:
+* **Terminal 1 (Backend)**:
+  ```bash
+  php artisan serve
+  ```
+* **Terminal 2 (Frontend)**:
+  ```bash
+  npm run dev
+  ```
+
+Akses aplikasi web di browser Anda pada alamat: **[http://localhost:8000](http://localhost:8000)**.
+
+---
+
+## 🔑 Kredensial Login Bawaan (Default Credentials)
+
+Setelah menjalankan database seeder, Anda dapat login menggunakan akun admin berikut untuk mengakses Dashboard Admin:
+- **Email**: `admin@gmail.com`
+- **Password**: `admin123`
