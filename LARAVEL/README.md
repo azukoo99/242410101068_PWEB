@@ -6,9 +6,7 @@
 ### Portal Pelanggan (Customer Features)
 - **Cek Akun Mobile Legends (Fetch API)**: Verifikasi asinkronus untuk mendeteksi *nickname* game berdasarkan User ID & Zone ID sebelum checkout untuk menghindari salah kirim.
 - **Formulir Top-Up Dinamis**: Pilihan paket diamond dibaca secara *real-time* dari database dengan validasi stok otomatis (pembelian diblokir jika stok habis).
-- **Beragam Metode Pembayaran**: Mendukung simulasi pembayaran populer seperti DANA, GoPay, OVO, Transfer BCA/BRI, dan ritel (Indomaret/Alfamart).
 - **Riwayat Pesanan**: Tabel riwayat transaksi lengkap dengan detail status, tanggal, metode bayar, dan total harga.
-- **Struk Digital (Invoice Detail)**: Struk belanja berdesain premium dengan kode pesanan terstruktur (**`#PS-0000xx`**).
 - **Mode Gelap/Terang (Dark/Light Mode)**: Peralihan tema menggunakan cookies (`color-theme`) tanpa kedipan layar (*flicker*) saat halaman dimuat ulang.
 
 ### Dashboard Admin (Admin Features)
